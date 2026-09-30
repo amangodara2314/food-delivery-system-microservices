@@ -1,0 +1,26 @@
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - "./infrastructure/nginx/nginx.conf:/etc/nginx/nginx.conf"
+
+  restaurant-service:
+    build: ./services/restaurant-service
+    ports:
+      - 3000:3000
+    env_file:
+      - ./services/restaurant-service/.env
+    depends_on:
+      - restaurant-db
+
+  restaurant-db:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - "restaurant_data:/data/db"
+
+volumes:
+  restaurant_data:
