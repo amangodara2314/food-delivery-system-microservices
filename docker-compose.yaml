@@ -12,6 +12,8 @@ services:
       - 3000:3000
     env_file:
       - ./services/restaurant-service/.env
+    environment:
+      MONGODB_URI: mongodb://restaurant-db:27017/restaurant-db
     depends_on:
       - restaurant-db
 
